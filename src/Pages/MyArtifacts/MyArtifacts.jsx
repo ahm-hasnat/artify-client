@@ -1,12 +1,59 @@
-import React, { use } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import { FaEdit,  FaTrashAlt } from 'react-icons/fa';
+import { m } from 'framer-motion';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const MyArtifacts = () => {
     const allArtifacts = useLoaderData();
     const {user} = use(AuthContext);
-    const myArtifacts = allArtifacts.filter(artifact => artifact.addedBy === user?.displayName);
+
+
+    const [myArtifacts, setMyArtifacts] = useState([]);
+     useEffect(() => {
+        setMyArtifacts(allArtifacts.filter(artifact => 
+            artifact.addedBy === user?.displayName));
+    }, [allArtifacts, user]);
+
+        const handleDelete = (id) => {
+            console.log(id);
+             Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+       
+         axios.delete(`http://localhost:3000/allartifacts/${id}`)
+            .then((res) => {
+         
+            if (res.data.deletedCount) {
+                 setMyArtifacts(myArtifacts.filter(artifact => artifact._id !== id));
+                   Swal.fire({
+                       title: 'Deleted!',
+                       text: 'Your artifact has been deleted.',
+                       icon: 'success',
+                        showConfirmButton: false,
+                   timer: 1500,
+                   });
+                  
+               }
+            })
+            }
+            })
+            .catch(error => {
+              
+                console.error("Error deleting artifact:", error);
+            });
+        };
+
     return (
           <div className="py-16 mt-10">
       <div className="max-w-5xl mx-auto px-4">
@@ -72,7 +119,7 @@ const MyArtifacts = () => {
                       </button>
                       <button
                         className="btn btn-sm btn-outline btn-error ml-2"
-                       
+                       onClick={() => handleDelete(artifact._id)}
                       >
                         <FaTrashAlt />
                       </button>
