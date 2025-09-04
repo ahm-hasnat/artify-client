@@ -38,6 +38,8 @@ const AddArtifact = () => {
 
 
     }
+
+    
     return (
         <div className="py-12 px-6 mt-16 bg-base-200">
       
@@ -197,13 +199,17 @@ const AddArtifact = () => {
 
          
             <div className="flex justify-center">
-              <button type="submit" className="btn btn1 px-8">
-                Add Artifact
-              </button>
-            </div>
-          </form>
-        </div>
+              <button
+                type="submit"
+                className="btn btn-primary px-8 bg-[#204e51]
+               border-none hover:bg-[#183b3d]"
+            >
+              Add Artifact
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
     </div>
     );
 };

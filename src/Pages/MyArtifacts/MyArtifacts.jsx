@@ -1,5 +1,5 @@
 import React, { use, useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import { FaEdit,  FaTrashAlt } from 'react-icons/fa';
 import { m } from 'framer-motion';
@@ -9,13 +9,19 @@ import Swal from 'sweetalert2';
 const MyArtifacts = () => {
     const allArtifacts = useLoaderData();
     const {user} = use(AuthContext);
-
+    const navigate = useNavigate();
 
     const [myArtifacts, setMyArtifacts] = useState([]);
      useEffect(() => {
         setMyArtifacts(allArtifacts.filter(artifact => 
             artifact.addedBy === user?.displayName));
     }, [allArtifacts, user]);
+
+
+    const handleUpdate = (id) => {
+        navigate(`/update/${id}`);
+        console.log(id);
+    };
 
         const handleDelete = (id) => {
             console.log(id);
@@ -112,8 +118,7 @@ const MyArtifacts = () => {
                     <td>
                       <button
                         className="btn btn-sm btn-outline btn-info"
-                        
-                        
+                        onClick={() => handleUpdate(artifact._id)}
                       >
                         <FaEdit />
                       </button>
