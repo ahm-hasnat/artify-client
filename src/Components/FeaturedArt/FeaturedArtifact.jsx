@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FaArrowRight, FaHeart } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const FeaturedArtifact = () => {
   const [featured, setFeatured] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetch("http://localhost:3000/featured")
       .then((res) => res.json())
@@ -44,11 +44,12 @@ const FeaturedArtifact = () => {
                 </div>
 
               <div className="">
-                
-                <button className="btn btn-md btn2 p-0 text-md 
-                flex items-center gap-2">
-                  View Details <FaArrowRight />
-                </button>
+
+                  <button onClick={() => navigate(`/details/${item._id}`)} className="btn btn-md btn2 p-0 text-md
+                  flex items-center gap-2">
+                    View Details <FaArrowRight />
+                  </button>
+               
               </div>
             </div>
           </div>

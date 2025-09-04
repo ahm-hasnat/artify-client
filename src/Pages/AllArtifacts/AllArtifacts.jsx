@@ -1,12 +1,12 @@
 import React from "react";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import { FaHeart, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router"; // make sure this is react-router-dom
 
 const AllArtifacts = () => {
   const allArtifacts = useLoaderData();
   const artifacts = allArtifacts.filter(artifact => !artifact.status);
-
+  const navigate = useNavigate();
   return (
     <div className="py-12 mt-16 w-6xl mx-auto mb-6">
       <h1 className="text-4xl font-bold text-center mb-6 big">
@@ -40,12 +40,12 @@ const AllArtifacts = () => {
               </div>
 
               <div>
-                <Link to={`/artifact/${item._id}`}>
-                  <button className="btn btn-md btn2 p-0 text-md flex
+
+                  <button onClick={() => navigate(`/details/${item._id}`)} className="btn btn-md btn2 p-0 text-md flex
                    items-center gap-2 ">
                     View Details <FaArrowRight />
                   </button>
-                </Link>
+                
               </div>
             </div>
           </div>

@@ -4,6 +4,7 @@ import Root from '../Layouts/Root';
 import ErrorPage from '../Pages/Error/ErrorPage';
 import Home from '../Pages/Home/Home';
 import AllArtifacts from '../Pages/AllArtifacts/AllArtifacts';
+import ArtifactDetails from '../Pages/ArtifactDetails/ArtifactDetails';
 
 
 
@@ -22,6 +23,10 @@ import AllArtifacts from '../Pages/AllArtifacts/AllArtifacts';
                path: "/allartifacts",
                element: <AllArtifacts />,
                loader: () => fetch('http://localhost:3000/allartifacts'),
+             },{
+              path : '/details/:id',
+              element: <ArtifactDetails />,
+              loader: ({ params }) => fetch(`http://localhost:3000/allartifacts/${params.id}`)
              }
             ]
         },
