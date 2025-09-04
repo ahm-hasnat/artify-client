@@ -1,10 +1,10 @@
 import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuildingColumns } from '@fortawesome/free-solid-svg-icons';
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
 
 const Navbar = () => {
-  const activeLink = ({ isActive }) => (isActive ? "underline md:text-[#B8860B]" :
+  const activeLink = ({ isActive }) => (isActive ? "underline md:text-yellow-500" :
      "md:text-white");
 
     return (
@@ -38,7 +38,7 @@ const Navbar = () => {
       <li><NavLink className={activeLink} to="/">Home</NavLink></li>
 
       <li><NavLink className={activeLink} to="/allartifacts">All Artifacts</NavLink></li>
-      <li><NavLink className={activeLink} to="/addartifacts">Add Artifacts</NavLink></li>
+      <li><NavLink className={activeLink} to="/addartifact">Add Artifacts</NavLink></li>
     </ul>
   </div>
  <div className="navbar-end">
@@ -60,7 +60,7 @@ const Navbar = () => {
       </ul>
 </div>
 
-  <a className="btn btn1">Sign Out</a>
+ <Link to={'/auth/signin'} className="btn btn1">Sign Out</Link>
 
   </div>
 </div>

@@ -39,7 +39,7 @@ const Footer = () => {
 
         {/* Quick Links */}
         <div>
-          <h3 className="text-lg font-semibold text-yellow-400 mb-3">
+          <h3 className="text-lg font-semibold text-yellow-500 mb-3">
             Quick Links
           </h3>
           <ul className="space-y-2 text-sm">
@@ -63,7 +63,7 @@ const Footer = () => {
 
         {/* Explore */}
         <div>
-          <h3 className="text-lg font-semibold text-yellow-400 mb-3">
+          <h3 className="text-lg font-semibold text-yellow-500 mb-3">
             Explore
           </h3>
           <ul className="space-y-2 text-sm">
@@ -84,7 +84,7 @@ const Footer = () => {
 
         {/* Contact */}
         <div>
-          <h3 className="text-lg font-semibold text-yellow-400 mb-3">
+          <h3 className="text-lg font-semibold text-yellow-500 mb-3">
             Contact Us
           </h3>
           <p className="text-sm">123 Museum Drive, Cultural District</p>

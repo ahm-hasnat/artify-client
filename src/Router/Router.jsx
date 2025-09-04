@@ -5,6 +5,10 @@ import ErrorPage from '../Pages/Error/ErrorPage';
 import Home from '../Pages/Home/Home';
 import AllArtifacts from '../Pages/AllArtifacts/AllArtifacts';
 import ArtifactDetails from '../Pages/ArtifactDetails/ArtifactDetails';
+import AddArtifact from '../Pages/AddArtifact/AddArtifact';
+import Auth from '../Pages/Auth/Auth';
+import SignIn from '../Pages/Auth/SignIn';
+import Register from '../Pages/Auth/Register';
 
 
 
@@ -27,9 +31,28 @@ import ArtifactDetails from '../Pages/ArtifactDetails/ArtifactDetails';
               path : '/details/:id',
               element: <ArtifactDetails />,
               loader: ({ params }) => fetch(`http://localhost:3000/allartifacts/${params.id}`)
+             },{
+              path : '/addartifact',
+              element: <AddArtifact />,
+
+
              }
             ]
         },
+      {
+        path: "/auth",
+        element: <Auth />,
+        children: [
+          {
+            path: "/auth/signin",
+            element: <SignIn />,
+          },
+          {
+            path: "/auth/register",
+            element: <Register />,
+          },
+        ],
+      }
     ]);
    
 
