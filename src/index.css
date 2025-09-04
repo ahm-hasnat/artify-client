@@ -19,6 +19,7 @@ body {
 .btn2{
     background-color: white;
     color: #B8860B;
+    border: 0;
     
 }
 .btn1:hover{
@@ -26,13 +27,16 @@ body {
             transform: translateY(-2px);
         }
 .big{
-    color:#1A3E6F ;
-    font-size: 2rem;
+    color:#13130d ;
     font-weight: bold;
 }
 .small{
     color:#6B7280 ;
     font-size: 0.875rem;
     font-weight: normal;
+}
+.swiper-button-next,
+.swiper-button-prev {
+  color: #555722 !important; /* Dark blue */
 }
 

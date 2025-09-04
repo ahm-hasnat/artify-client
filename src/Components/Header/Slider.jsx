@@ -30,7 +30,7 @@ const slides = [
 
 const Slider = () => {
   return (
-    <div className="w-full h-[600px]">
+    <div className="w-full h-[600px] mt-16">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -58,7 +58,7 @@ const Slider = () => {
             
               <div className="absolute inset-0 bg-black/40 flex flex-col 
               items-center justify-center text-center text-white p-6">
-                <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                <h1 className="text-4xl md:text-5xl font-bold mb-6">
                   {slide.title}
                 </h1>
                 <p className="text-lg max-w-2xl text-[#ffffffc9]">{slide.description}</p>

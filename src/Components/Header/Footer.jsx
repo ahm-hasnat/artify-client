@@ -4,34 +4,34 @@ import {
   FaTwitter,
   FaInstagram,
   FaPinterestP,
-  FaGithub,
+  FaGithub
 } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-[#1A3E6F] to-[#2a5298] text-gray-200 pt-10 pb-6">
+    <footer className="bg-[#666666] text-gray-200 pt-10 pb-6">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
         {/* Brand Section */}
         <div>
           <h2 className="text-2xl font-bold text-white">Artify</h2>
-          <p className="mt-3 text-sm leading-relaxed text-gray-300">
+          <p className="mt-3 text-sm leading-relaxed text-gray-200">
             Preserving history and making artifacts accessible to everyone.
             Explore relics, stories, and discoveries from across the world.
           </p>
           <div className="flex gap-3 mt-4">
-            <a className="p-2 rounded-full bg-white/10 hover:bg-white/20">
+            <a className="p-2 rounded-full bg-white/20 hover:bg-white/30">
               <FaFacebookF />
             </a>
-            <a className="p-2 rounded-full bg-white/10 hover:bg-white/20">
+            <a className="p-2 rounded-full bg-white/20 hover:bg-white/30">
               <FaTwitter />
             </a>
-            <a className="p-2 rounded-full bg-white/10 hover:bg-white/20">
+            <a className="p-2 rounded-full bg-white/20 hover:bg-white/30">
               <FaInstagram />
             </a>
-            <a className="p-2 rounded-full bg-white/10 hover:bg-white/20">
+            <a className="p-2 rounded-full bg-white/20 hover:bg-white/30">
               <FaPinterestP />
             </a>
-            <a className="p-2 rounded-full bg-white/10 hover:bg-white/20">
+            <a className="p-2 rounded-full bg-white/20 hover:bg-white/30">
               <FaGithub />
             </a>
           </div>
@@ -93,8 +93,9 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Line */}
-      <div className="mt-10 border-t border-white/10 pt-4 text-center text-sm text-gray-400">
+      
+      <div className="mt-10 border-t border-white/10 pt-4 text-center
+       text-sm text-gray-300">
         © {new Date().getFullYear()} Artify — Historical Artifacts Tracker.
         All rights reserved.
       </div>

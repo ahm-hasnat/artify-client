@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router";
 import Root from '../Layouts/Root';
 import ErrorPage from '../Pages/Error/ErrorPage';
 import Home from '../Pages/Home/Home';
+import AllArtifacts from '../Pages/AllArtifacts/AllArtifacts';
 
 
 
@@ -16,7 +17,12 @@ import Home from '../Pages/Home/Home';
                 index: true,
                 element : <Home />,
                 path : '/',
-              }
+              },
+             {
+               path: "/allartifacts",
+               element: <AllArtifacts />,
+               loader: () => fetch('http://localhost:3000/allartifacts'),
+             }
             ]
         },
     ]);
