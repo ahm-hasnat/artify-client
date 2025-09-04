@@ -10,6 +10,7 @@ import Auth from '../Pages/Auth/Auth';
 import SignIn from '../Pages/Auth/SignIn';
 import Register from '../Pages/Auth/Register';
 import MyArtifacts from '../Pages/MyArtifacts/MyArtifacts';
+import LikedArtifact from '../Pages/LikedArtifact/LikedArtrfact';
 
 
 
@@ -42,7 +43,12 @@ import MyArtifacts from '../Pages/MyArtifacts/MyArtifacts';
               path:'/myartifacts',
               element: <MyArtifacts />,
               loader: () => fetch('http://localhost:3000/allartifacts')
-             }
+             },
+             {
+              path: '/liked',
+              element: <LikedArtifact />,
+              loader: () => fetch('http://localhost:3000/allartifacts')
+             },
             ]
         },
       {

@@ -76,7 +76,7 @@ const Navbar = () => {
            <h3 className='font-bold text-lg'>{user?.displayName}</h3>
          <li><NavLink className={activeLink} to="/myartifacts">My Artifacts</NavLink></li>
 
-        <li><NavLink className={activeLink} to="/liked">Liked Artifacts</NavLink></li>
+        <li><NavLink to={'/liked'} className={activeLink} to="/liked">Liked Artifacts</NavLink></li>
         <li><NavLink className={activeLink} to="/settings"></NavLink></li>
          <button onClick={handleSignOut} className="btn btn1 btn-sm">Sign Out</button>
       </ul>

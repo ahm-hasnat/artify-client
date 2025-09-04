@@ -1,11 +1,91 @@
-import React from 'react';
+import React, { use } from 'react';
+import { useLoaderData } from 'react-router';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
+import { FaEdit,  FaTrashAlt } from 'react-icons/fa';
 
 const MyArtifacts = () => {
+    const allArtifacts = useLoaderData();
+    const {user} = use(AuthContext);
+    const myArtifacts = allArtifacts.filter(artifact => artifact.addedBy === user?.displayName);
     return (
-        <div>
-            <h1 className="text-4xl font-bold text-center mb-4">My Artifacts</h1>
-            <p className="text-center">Here you can manage your artifacts.</p>
-        </div>
+          <div className="py-16 mt-10">
+      <div className="max-w-5xl mx-auto px-4">
+        <h1 className="text-3xl font-bold text-center mb-10 big">
+          My Artifacts
+        </h1>
+
+        {myArtifacts.length === 0 ? (
+          <div className="flex flex-col items-center justify-center">
+            <p className="text-center text-gray-500 mb-4">
+              You haven't added any artifacts yet.
+            </p>
+           
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="table-auto w-full shadow-md rounded-lg border border-gray-200">
+              <thead className="bg-[#2a5298] text-white text-sm">
+                <tr>
+                  <th className="p-3">#</th>
+                  <th className="p-3">Image</th>
+                  <th className="p-3">Name</th>
+                  <th className="p-3">Type</th>
+                  <th className="p-3">Created At</th>
+                  <th className="p-3">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {myArtifacts.map((artifact, index) => (
+                  <tr
+                    key={artifact._id}
+                    className="odd:bg-white even:bg-gray-50 hover:bg-gray-100 
+                  text-center  transition"
+                  >
+                    <td className="p-3 text-center">{index + 1}</td>
+                    <td className="p-3">
+                      <div className="w-32 h-20 rounded overflow-hidden mx-auto">
+                        <img
+                          src={artifact.artifactImage}
+                          alt={artifact.artifactName}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </td>
+                    <td className="p-3 font-semibold">{artifact.artifactName}</td>
+                    <td className="p-3">
+                      <span className="badge badge-accent px-3 py-1">
+                        {artifact.artifactType}
+                      </span>
+                    </td>
+                    <td className="p-3">
+                      <span className="badge badge-info px-3 py-1">
+                        {artifact.createdAt}
+                      </span>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-sm btn-outline btn-info"
+                        
+                        
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        className="btn btn-sm btn-outline btn-error ml-2"
+                       
+                      >
+                        <FaTrashAlt />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+      
+    </div>
     );
 };
 

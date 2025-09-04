@@ -9,12 +9,12 @@ const AddArtifact = () => {
     const handleAddArtifact = e => {
          e.preventDefault();
     const form = e.target;
-    const name = user?.displayName;
+    const addedBy = user?.displayName;
     const email = user?.email;
     const formData = new FormData(form);
     const newData = Object.fromEntries(formData.entries());
 
-    const newArtifact = {...newData,name,email, likes : 0};
+    const newArtifact = {...newData,addedBy,email, likes : 0};
 
     axios.post('http://localhost:3000/artifactdata', newArtifact)
       .then(res => {
