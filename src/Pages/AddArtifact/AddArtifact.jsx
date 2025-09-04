@@ -1,6 +1,43 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const AddArtifact = () => {
+    const { user } = useContext(AuthContext);
+    console.log(user);
+    const handleAddArtifact = e => {
+         e.preventDefault();
+    const form = e.target;
+    const name = user?.displayName;
+    const email = user?.email;
+    const formData = new FormData(form);
+    const newData = Object.fromEntries(formData.entries());
+
+    const newArtifact = {...newData,name,email, likes : 0};
+
+    axios.post('http://localhost:3000/artifactdata', newArtifact)
+      .then(res => {
+        console.log('Artifact added:', res.data);
+         if(res.data.insertedId){
+             Swal.fire({
+                      title: "Success!",
+                      text: "Artifact added successfully!",
+                      icon: "success",
+                      showConfirmButton: false,
+                      timer: 1500,
+                    });
+           
+            form.reset();
+         }
+      })
+      .catch(error => {
+        console.error('Error adding artifact:', error);
+      });
+
+
+
+    }
     return (
         <div className="py-12 px-6 mt-16 bg-base-200">
       
@@ -13,8 +50,8 @@ const AddArtifact = () => {
       <div className="card w-full lg:w-2/3 mx-auto shadow-xl 
       bg-base-100 border border-gray-200 rounded-2xl">
         <div className="card-body">
-          <form  className="space-y-6">
-         
+          <form onSubmit={handleAddArtifact} className="space-y-6">
+
             <div>
               <label className="label font-semibold">Artifact Name</label>
               <input
@@ -142,7 +179,7 @@ const AddArtifact = () => {
                 <label className="label font-semibold">Adder Name</label>
                 <input
                   type="text"
-                 
+                  value={user?.displayName}
                   readOnly
                   className="input input-bordered w-full bg-gray-100"
                 />
@@ -151,7 +188,7 @@ const AddArtifact = () => {
                 <label className="label font-semibold">Adder Email</label>
                 <input
                   type="email"
-                 
+                  value={user?.email}
                   readOnly
                   className="input input-bordered w-full bg-gray-100"
                 />

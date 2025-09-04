@@ -71,7 +71,7 @@ const Navbar = () => {
  
    <ul
         tabIndex={0}
-        className="menu menu-sm dropdown-content bg-[#2a5298e2] text-white
+        className="menu menu-sm dropdown-content bg-[#666666] text-white
         rounded-box z-1 mt-15 w-40 p-2 shadow">
            <h3 className='font-bold text-lg'>{user?.displayName}</h3>
          <li><NavLink className={activeLink} to="/myartifacts">My Artifacts</NavLink></li>

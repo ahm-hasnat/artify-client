@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Register = () => {
-  const { createUser, setUser } = use(AuthContext);
+  const { createUser,  updateUser } = use(AuthContext);
   const [passError, setPassError] = useState("");
   const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();
@@ -47,7 +47,11 @@ const Register = () => {
       
         const user = result.user;
 
-        setUser(user);
+        updateUser({
+     
+       displayName : name,
+       photoURL: photo
+      }).then(() => {
 
         Swal.fire({
           title: "Success!",
@@ -58,7 +62,7 @@ const Register = () => {
         });
         navigate("/");
       })
-
+      })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
           Swal.fire({
@@ -67,7 +71,7 @@ const Register = () => {
             text: "Please log in!",
             draggable: true,
           });
-          navigate("/signin");
+          navigate("/auth/signin");
         }
       });
   };
