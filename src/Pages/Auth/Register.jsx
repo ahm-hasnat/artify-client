@@ -1,104 +1,173 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React, { use, useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Register = () => {
-    return (
-        <div className="flex justify-center items-center min-h-screen bg-base-200 px-4 mt-16">
-      <div className="card w-full max-w-md shadow-xl bg-base-100 border border-gray-200 rounded-2xl">
-        <div className="card-body">
-       
-          <h1 className="text-4xl font-bold text-center mb-4">Register Now</h1>
-         
+  const { createUser, setUser } = use(AuthContext);
+  const [passError, setPassError] = useState("");
+  const [showPass, setShowPass] = useState(false);
+  const navigate = useNavigate();
 
-         
-          <form  className="space-y-4">
-          
-            <div>
-              <label className="label font-semibold">Name</label>
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const userData = Object.fromEntries(formData.entries());
+
+    const { name, photo, email, password } = userData;
+   
+   
+    const hasUpper = /[A-Z]/.test(password);
+    const hasLower = /[a-z]/.test(password);
+    const hasLength = password.length >= 6;
+
+    if (!hasLength && !hasUpper && !hasLower) {
+      setPassError(
+        "Password must be at least 6 characters, include at least one uppercase,one lowercase letter."
+      );
+      return;
+    } else if (!hasLength) {
+      setPassError("Password must be at least 6 characters.");
+      return;
+    } else if (!hasUpper) {
+      setPassError("Include at least one uppercase letter.");
+      return;
+    } else if (!hasLower) {
+      setPassError("Include at least one lowercase letter.");
+      return;
+   
+    } else {
+      setPassError("");
+    }
+
+    createUser(email, password)
+      .then((result) => {
+      
+        const user = result.user;
+
+        setUser(user);
+
+        Swal.fire({
+          title: "Success!",
+          text: "Registration completed.!!",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          Swal.fire({
+            title: "User already exists!",
+            icon: "warning",
+            text: "Please log in!",
+            draggable: true,
+          });
+          navigate("/signin");
+        }
+      });
+  };
+
+  return (
+    <div className="hero mt-12">
+     
+      <div className="hero-content flex-col lg:flex ">
+        <div className="text-center lg:text-left">
+          <h1 className="text-3xl font-bold mb-3 mt-4">Register now!</h1>
+        </div>
+        <div
+          className="card   h-full  
+    shadow-2xl border border-gray-200 nob"
+        >
+          <div className="card-body md:w-lg ">
+            <form onSubmit={handleRegister} className="form w-full">
+              <label className="label">Name</label>
+              <br />
               <input
                 type="text"
                 name="name"
-               
-                placeholder="Enter your full name"
-                className="input input-bordered w-full"
-                required
+                className="input mb-1 mt-2 w-full kala"
+                placeholder="name"
               />
-            </div>
-
-          
-            <div>
-              <label className="label font-semibold">Email</label>
+              <br />
+              <label className="label">Email</label>
+              <br />
               <input
                 type="email"
                 name="email"
-             
-                placeholder="Enter your email"
-                className="input input-bordered w-full"
-                required
+                className="input mb-1 mt-2 w-full kala"
+                placeholder="Email"
               />
-            </div>
-
-         
-            <div>
-              <label className="label font-semibold">Photo URL</label>
+              <br />
+              <label className="label">Photo URL</label>
+              <br />
               <input
-                type="url"
-                name="photoURL"
-            
-                placeholder="Profile picture URL"
-                className="input input-bordered w-full"
+                type="link"
+                name="photo"
+                className="input mb-1 mt-2 w-full kala"
+                placeholder="photo"
               />
-            </div>
-
-         
-            <div>
-              <label className="label font-semibold">Password</label>
-              <input
-                type="password"
-                name="password"
-              
-                placeholder="Enter a strong password"
-                className="input input-bordered w-full"
-                required
-              />
-            </div>
-
-          
-            <div className="form-control">
-              <label className="cursor-pointer label justify-start gap-2">
+              <br />
+              <label className="label mt-3">Password</label>
+              <br />
+              <div className="relative">
+                <input
+                  type={showPass ? "text" : "password"}
+                  name="password"
+                  className="input bg-[#F3F3F3] w-full mt-2 kala"
+                  placeholder="Password"
+                  required
+                />
+                {passError && <p className="text-xs text-error">{passError}</p>}
+                <button
+                  onClick={() => setShowPass(!showPass)}
+                  type="button"
+                  className="btn btn-sm text-gray-400 border-0 bg-[#F3F3F3] 
+                  absolute top-3 right-1 kala"
+                >
+                  {showPass ? (
+                    <FaEyeSlash className="text-lg"></FaEyeSlash>
+                  ) : (
+                    <FaEye className="text-lg"></FaEye>
+                  )}
+                </button>
+              </div>
+              <div className="flex items-center gap-2 mt-1">
                 <input
                   type="checkbox"
-                  name="termsAccepted"
-                
-                  className="checkbox checkbox-sm"
+                  defaultChecked
+                  className="checkbox checkbox-sm "
+                  required
                 />
-                <span className="label-text">
-                  I agree to the{" "}
-                  <a href="#" className="link link-primary">
-                    Terms and Conditions
-                  </a>
-                </span>
-              </label>
-            </div>
-
-          
-            <div>
-              <button type="submit" className="btn btn-primary w-full">
+                <p className="text-xs">Accept terms & conditions</p>
+              </div>
+              <button
+                type="submit"
+                className="btn btn-neutral w-full mt-4 mb-2 "
+              >
                 Register
               </button>
-            </div>
-          </form>
+              <p>
+                Already have an account?{" "}
+                <span
+                  onClick={() => navigate("/auth/signin")}
+                  className="text-blue-700 
+          font-bold hover:underline cursor-pointer text-xs"
+                >
+                  Signin
+                </span>
+              </p>
+            </form>
          
-          <p className="text-center text-gray-600 mt-4">
-            Already have an account?{" "}
-            <Link to="/auth/signin" className="link link-primary font-semibold">
-              Sign In here
-            </Link>
-          </p>
+          </div>
         </div>
       </div>
     </div>
-    );
+  );
 };
 
 export default Register;

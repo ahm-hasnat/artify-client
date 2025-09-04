@@ -9,6 +9,7 @@ import AddArtifact from '../Pages/AddArtifact/AddArtifact';
 import Auth from '../Pages/Auth/Auth';
 import SignIn from '../Pages/Auth/SignIn';
 import Register from '../Pages/Auth/Register';
+import MyArtifacts from '../Pages/MyArtifacts/MyArtifacts';
 
 
 
@@ -36,6 +37,11 @@ import Register from '../Pages/Auth/Register';
               element: <AddArtifact />,
 
 
+             },
+             {
+              path:'/myartifacts',
+              element: <MyArtifacts />,
+              loader: () => fetch('http://localhost:3000/allartifacts')
              }
             ]
         },

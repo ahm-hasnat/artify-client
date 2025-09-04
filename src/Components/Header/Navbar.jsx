@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { use } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuildingColumns } from '@fortawesome/free-solid-svg-icons';
-import { Link, NavLink } from 'react-router';
+import { Link, NavLink, useNavigate } from 'react-router';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
+import Swal from 'sweetalert2';
+
 
 const Navbar = () => {
+  
+  const { user,signout } = use(AuthContext);
+  const navigate = useNavigate();
+
+   const handleSignOut = () => {
+   
+    signout().then(() => {
+      Swal.fire({
+        title: "Signed Out!",
+        text: "User signed Out!.",
+        icon: "info",
+      });
+      navigate("/auth/signin");
+    });
+  };
   const activeLink = ({ isActive }) => (isActive ? "underline md:text-yellow-500" :
      "md:text-white");
 
@@ -43,25 +61,33 @@ const Navbar = () => {
   </div>
  <div className="navbar-end">
     
-     <div className="avatar avatar-online mx-3 dropdown dropdown-center">
+    {user ? (
+
+    
+     <div className="avatar avatar-online mx-3 dropdown dropdown-left">
   <div className="w-12 rounded-full cursor-pointer" tabIndex={0} role='button'>
-    <img src="https://img.daisyui.com/images/profile/demo/gordon@192.webp" />
+    <img src={user?.photoURL} />
   </div>
  
    <ul
         tabIndex={0}
         className="menu menu-sm dropdown-content bg-[#2a5298e2] text-white
         rounded-box z-1 mt-15 w-40 p-2 shadow">
-           <h3 className='font-bold text-lg'>User Name</h3>
+           <h3 className='font-bold text-lg'>{user?.displayName}</h3>
          <li><NavLink className={activeLink} to="/myartifacts">My Artifacts</NavLink></li>
 
         <li><NavLink className={activeLink} to="/liked">Liked Artifacts</NavLink></li>
         <li><NavLink className={activeLink} to="/settings"></NavLink></li>
+         <button onClick={handleSignOut} className="btn btn1 btn-sm">Sign Out</button>
       </ul>
+      
 </div>
 
- <Link to={'/auth/signin'} className="btn btn1">Sign Out</Link>
+    ) : (
 
+      <Link to={'/auth/signin'} className="btn btn1">Sign In</Link>
+
+    )}
   </div>
 </div>
     );
