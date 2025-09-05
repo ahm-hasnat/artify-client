@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const { createUser,  updateUser } = use(AuthContext);
@@ -78,7 +79,9 @@ const Register = () => {
 
   return (
     <div className="hero mt-12">
-     
+      <Helmet>
+        <title>Artify - Register</title>
+      </Helmet>
       <div className="hero-content flex-col lg:flex ">
         <div className="text-center lg:text-left">
           <h1 className="text-3xl font-bold mb-3 mt-4">Register now!</h1>

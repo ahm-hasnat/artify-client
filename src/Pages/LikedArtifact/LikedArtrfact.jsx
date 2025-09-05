@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useLoaderData } from "react-router";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { FaHeart, FaMapMarkerAlt } from "react-icons/fa";
+import { Helmet } from "react-helmet-async";
 
 const LikedArtifact = () => {
   const { user } = useContext(AuthContext);
@@ -12,7 +13,10 @@ const LikedArtifact = () => {
   );
 
   return (
-    <div className="kala">
+    <div className="">
+      <Helmet>
+        <title>Artify - My Liked Artifacts</title>
+      </Helmet>
       <div className="max-w-6xl mx-auto px-4 py-16 mt-10">
         <h1 className="text-3xl font-bold text-center mb-10 big">
           My Liked Artifacts

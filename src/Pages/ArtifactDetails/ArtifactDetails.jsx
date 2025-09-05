@@ -4,6 +4,7 @@ import { FaHeart, FaThumbsUp } from "react-icons/fa";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { Helmet } from "react-helmet-async";
 
 const ArtifactDetails = () => {
   const artifact = useLoaderData();
@@ -34,8 +35,11 @@ const ArtifactDetails = () => {
   };
   return (
     <div className="py-12 px-4 mt-16 mb-10">
+        <Helmet>
+          <title>Artify - Artifact Details</title>
+        </Helmet>
       <div className="text-center mb-10">
-        <h1 className="text-5xl font-bold mb-4">Artifact Details</h1>
+        <h1 className="text-4xl font-bold mb-4">Artifact Details</h1>
 
         <p className="text-gray-600 max-w-2xl mx-auto">
           Explore this artifact in detail, learn about its historical context,

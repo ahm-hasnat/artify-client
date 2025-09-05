@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useLoaderData, useParams } from 'react-router';
 import Swal from 'sweetalert2';
 
@@ -41,6 +42,9 @@ const UpdateArtifact = () => {
 
     return (
         <div className=" max-w-5xl mx-auto my-16 px-6 pt-10">
+            <Helmet>
+              <title>Artify - Update Artifact</title>
+            </Helmet>
              <h1 className="text-4xl font-bold mb-8 text-center">
           Update Artifact
         </h1>

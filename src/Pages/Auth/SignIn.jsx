@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router";
 
 import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { Helmet } from "react-helmet-async";
 
 
 const Signin = () => {
@@ -47,7 +48,9 @@ const Signin = () => {
   };
   return (
     <div className="hero mt-16">
-      
+       <Helmet>
+              <title>Artify - Sign In</title>
+            </Helmet>
       <div className="hero-content flex-col lg:flex">
         <div className="text-center lg:text-left">
           <h1 className="text-3xl font-bold mb-3 mt-4">Sign In now!</h1>

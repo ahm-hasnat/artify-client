@@ -5,6 +5,7 @@ import { FaEdit,  FaTrashAlt } from 'react-icons/fa';
 import { m } from 'framer-motion';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet-async';
 
 const MyArtifacts = () => {
     const allArtifacts = useLoaderData();
@@ -62,6 +63,9 @@ const MyArtifacts = () => {
 
     return (
           <div className="py-16 mt-10">
+            <Helmet>
+              <title>Artify - My Artifacts</title>
+            </Helmet>
       <div className="max-w-5xl mx-auto px-4">
         <h1 className="text-3xl font-bold text-center mb-10 big">
           My Artifacts

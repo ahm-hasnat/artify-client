@@ -2,6 +2,7 @@ import React from "react";
 import { useLoaderData, useNavigate } from "react-router";
 import { FaHeart, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router"; // make sure this is react-router-dom
+import { Helmet } from "react-helmet-async";
 
 const AllArtifacts = () => {
   const allArtifacts = useLoaderData();
@@ -9,6 +10,9 @@ const AllArtifacts = () => {
   const navigate = useNavigate();
   return (
     <div className="py-12 mt-16 w-6xl mx-auto mb-6">
+      <Helmet>
+        <title>Artify - All Artifacts</title>
+      </Helmet>
       <h1 className="text-4xl font-bold text-center mb-6 big">
         All Our Collection
       </h1>

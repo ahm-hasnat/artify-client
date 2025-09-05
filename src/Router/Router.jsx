@@ -12,6 +12,7 @@ import Register from '../Pages/Auth/Register';
 import MyArtifacts from '../Pages/MyArtifacts/MyArtifacts';
 import LikedArtifact from '../Pages/LikedArtifact/LikedArtrfact';
 import UpdateArtifact from '../Pages/UpdateArtifact/UpdateArtifact';
+import PrivateRoute from '../AuthProvider/PrivateRoute';
 
 
 
@@ -36,22 +37,30 @@ import UpdateArtifact from '../Pages/UpdateArtifact/UpdateArtifact';
               loader: ({ params }) => fetch(`http://localhost:3000/allartifacts/${params.id}`)
              },{
               path : '/addartifact',
-              element: <AddArtifact />,
+              element: <PrivateRoute>
+                <AddArtifact />
+              </PrivateRoute>,
 
 
              },
              {
               path:'/myartifacts',
-              element: <MyArtifacts />,
+              element: <PrivateRoute>
+                <MyArtifacts />
+              </PrivateRoute>,
               loader: () => fetch('http://localhost:3000/allartifacts')
              },
              {
               path: '/liked',
-              element: <LikedArtifact />,
+              element: <PrivateRoute>
+                <LikedArtifact />
+              </PrivateRoute>,
               loader: () => fetch('http://localhost:3000/allartifacts')
              },{
               path: '/update/:id',
-              element: <UpdateArtifact />,
+              element: <PrivateRoute>
+                <UpdateArtifact />
+              </PrivateRoute>,
               loader: ({ params }) => fetch(`http://localhost:3000/allartifacts/${params.id}`)
              }
             ]

@@ -29,7 +29,7 @@ const Exhibitions = () => {
   };
 
   return (
-    <div className="py-12 w-6xl mx-auto">
+    <div className=" w-6xl mx-auto">
       <h1 className="text-4xl font-bold text-center mb-6">
         Ongoing Exhibitions
       </h1>

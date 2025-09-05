@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet-async';
 
 const AddArtifact = () => {
     const { user } = useContext(AuthContext);
@@ -39,10 +40,12 @@ const AddArtifact = () => {
 
     }
 
-    
+
     return (
         <div className="py-12 px-6 mt-16 bg-base-200">
-      
+          <Helmet>
+        <title>Artify - Add Artifact</title>
+      </Helmet>
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold mb-4">Add a New Artifact</h1>
        

@@ -56,7 +56,7 @@ const Slider = () => {
               />
 
             
-              <div className="absolute inset-0 bg-black/40 flex flex-col 
+              <div className="absolute inset-0 bg-black/30 flex flex-col 
               items-center justify-center text-center text-white p-6">
                 <h1 className="text-4xl md:text-5xl font-bold mb-6">
                   {slide.title}
