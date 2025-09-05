@@ -17,7 +17,7 @@ const ArtifactDetails = () => {
 
   const handleLike = () => {
     axios
-      .post(`http://localhost:3000/artifacts/${artifact._id}/like`, {
+      .post(`https://artify-server-opdh.onrender.com/artifacts/${artifact._id}/like`, {
         email: user.email,
       })
       .then((res) => {

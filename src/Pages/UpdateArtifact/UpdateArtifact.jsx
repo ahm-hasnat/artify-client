@@ -32,7 +32,7 @@ const UpdateArtifact = () => {
 
     axios
       .put(
-        `http://localhost:3000/allartifacts/${artifactData._id}`,
+        `https://artify-server-opdh.onrender.com/allartifacts/${artifactData._id}`,
         updatedArtifact
       )
       .then((res) => {

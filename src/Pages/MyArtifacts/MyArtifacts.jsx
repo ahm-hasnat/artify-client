@@ -18,7 +18,7 @@ const MyArtifacts = () => {
   useEffect(() => {
     const email = user?.email;
     const accessToken = user?.accessToken;
-    fetch(`http://localhost:3000/myartifacts?email=${email}`, {
+    fetch(`https://artify-server-opdh.onrender.com/myartifacts?email=${email}`, {
       headers: {
         authorization: `Bearer ${accessToken}`,
       },
@@ -48,7 +48,7 @@ const MyArtifacts = () => {
       .then((result) => {
         if (result.isConfirmed) {
           axios
-            .delete(`http://localhost:3000/allartifacts/${id}`)
+            .delete(`https://artify-server-opdh.onrender.com/allartifacts/${id}`)
             .then((res) => {
               if (res.data.deletedCount) {
                 setMyArtifacts(

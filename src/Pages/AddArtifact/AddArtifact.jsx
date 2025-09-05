@@ -18,7 +18,7 @@ const AddArtifact = () => {
     const newArtifact = { ...newData, addedBy, email, likes: 0 };
 
     axios
-      .post("http://localhost:3000/artifactdata", newArtifact)
+      .post("https://artify-server-opdh.onrender.com/artifactdata", newArtifact)
       .then((res) => {
         console.log("Artifact added:", res.data);
         if (res.data.insertedId) {

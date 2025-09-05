@@ -11,7 +11,7 @@ const AllArtifacts = () => {
   const fetchArtifacts = async (search = "") => {
     try {
       const res = await fetch(
-        `http://localhost:3000/allartifacts?search=${search}`
+        `https://artify-server-opdh.onrender.com/allartifacts?search=${search}`
       );
       const data = await res.json();
       setArtifacts(data.filter((item) => !item.status));

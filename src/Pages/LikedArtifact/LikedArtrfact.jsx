@@ -12,7 +12,7 @@ const LikedArtifact = () => {
   useEffect(() => {
     const email = user?.email;
     const accessToken = user?.accessToken;
-    fetch(`http://localhost:3000/likedartifacts?email=${email}`, {
+    fetch(`https://artify-server-opdh.onrender.com/likedartifacts?email=${email}`, {
       headers: {
         authorization: `Bearer ${accessToken}`,
       },

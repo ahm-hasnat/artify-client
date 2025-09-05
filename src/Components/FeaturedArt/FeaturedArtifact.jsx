@@ -6,7 +6,7 @@ const FeaturedArtifact = () => {
   const [featured, setFeatured] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    fetch("http://localhost:3000/featured")
+    fetch("https://artify-server-opdh.onrender.com/featured")
       .then((res) => res.json())
       .then((data) => setFeatured(data));
   }, []);

@@ -6,7 +6,7 @@ const Exhibitions = () => {
   const [exhibitions, setExhibitions] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/allartifacts")
+    fetch("https://artify-server-opdh.onrender.com/allartifacts")
       .then((res) => res.json())
       .then((data) => {
         const ongoing = data.filter((ex) => ex.status === "ongoing");

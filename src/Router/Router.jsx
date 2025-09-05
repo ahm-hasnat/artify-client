@@ -33,7 +33,7 @@ export const Router = createBrowserRouter([
         path: "/details/:id",
         element: <ArtifactDetails />,
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/allartifacts/${params.id}`),
+          fetch(`https://artify-server-opdh.onrender.com/allartifacts/${params.id}`),
       },
       {
         path: "/addartifact",
@@ -67,7 +67,7 @@ export const Router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/allartifacts/${params.id}`),
+          fetch(`https://artify-server-opdh.onrender.com/allartifacts/${params.id}`),
       },
     ],
   },
