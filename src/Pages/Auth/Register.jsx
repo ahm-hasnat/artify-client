@@ -6,7 +6,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { Helmet } from "react-helmet-async";
 
 const Register = () => {
-  const { createUser,  updateUser } = use(AuthContext);
+  const { createUser, updateUser } = use(AuthContext);
   const [passError, setPassError] = useState("");
   const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();
@@ -18,8 +18,7 @@ const Register = () => {
     const userData = Object.fromEntries(formData.entries());
 
     const { name, photo, email, password } = userData;
-   
-   
+
     const hasUpper = /[A-Z]/.test(password);
     const hasLower = /[a-z]/.test(password);
     const hasLength = password.length >= 6;
@@ -38,31 +37,27 @@ const Register = () => {
     } else if (!hasLower) {
       setPassError("Include at least one lowercase letter.");
       return;
-   
     } else {
       setPassError("");
     }
 
     createUser(email, password)
       .then((result) => {
-      
         const user = result.user;
 
         updateUser({
-     
-       displayName : name,
-       photoURL: photo
-      }).then(() => {
-
-        Swal.fire({
-          title: "Success!",
-          text: "Registration completed.!!",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 1500,
+          displayName: name,
+          photoURL: photo,
+        }).then(() => {
+          Swal.fire({
+            title: "Success!",
+            text: "Registration completed.!!",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/");
         });
-        navigate("/");
-      })
       })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
@@ -169,7 +164,6 @@ const Register = () => {
                 </span>
               </p>
             </form>
-         
           </div>
         </div>
       </div>

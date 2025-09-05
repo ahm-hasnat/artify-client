@@ -14,7 +14,6 @@ const Exhibitions = () => {
       });
   }, []);
 
-  
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: (custom) => ({
@@ -35,7 +34,8 @@ const Exhibitions = () => {
       </h1>
       <p className="text-center text-gray-600 max-w-2xl mx-auto mb-6">
         Explore our ongoing exhibitions showcasing remarkable artifacts and
-        cultural treasures from around the world. Don’t miss these unique displays!
+        cultural treasures from around the world. Don’t miss these unique
+        displays!
       </p>
 
       <div className="flex flex-col gap-6 px-6">
@@ -48,12 +48,13 @@ const Exhibitions = () => {
             variants={cardVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }} 
-            custom={index} 
+            viewport={{ once: true, amount: 0.2 }}
+            custom={index}
           >
-            
-            <div className="flex flex-col gap-3 justify-center items-center bg-white
-             p-6 w-28 border-r">
+            <div
+              className="flex flex-col gap-3 justify-center items-center bg-white
+             p-6 w-28 border-r"
+            >
               <p className="text-sm font-semibold text-gray-500 uppercase">
                 {new Date(exhibition.startDate).toLocaleString("default", {
                   month: "short",
@@ -64,7 +65,6 @@ const Exhibitions = () => {
               </h2>
             </div>
 
-           
             <div className="flex-1 p-6 gap-3">
               <p className="text-gray-500 text-sm flex items-center gap-2 mb-1">
                 <FaCalendarAlt className="text-[#B8860B]" />
@@ -82,7 +82,6 @@ const Exhibitions = () => {
               </p>
             </div>
 
-          
             <div className="w-1/3 min-w-[250px] h-full">
               <img
                 src={exhibition.image}

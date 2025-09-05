@@ -4,14 +4,14 @@ import {
   FaTwitter,
   FaInstagram,
   FaPinterestP,
-  FaGithub
+  FaGithub,
 } from "react-icons/fa";
 
 const Footer = () => {
   return (
     <footer className="bg-[#666666] text-gray-200 pt-10 pb-6">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
-        {/* Brand Section */}
+      
         <div>
           <h2 className="text-2xl font-bold text-white">Artify</h2>
           <p className="mt-3 text-sm leading-relaxed text-gray-200">
@@ -37,7 +37,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Quick Links */}
+       
         <div>
           <h3 className="text-lg font-semibold text-yellow-500 mb-3">
             Quick Links
@@ -61,7 +61,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Explore */}
+        
         <div>
           <h3 className="text-lg font-semibold text-yellow-500 mb-3">
             Explore
@@ -82,7 +82,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Contact */}
+    
         <div>
           <h3 className="text-lg font-semibold text-yellow-500 mb-3">
             Contact Us
@@ -93,11 +93,12 @@ const Footer = () => {
         </div>
       </div>
 
-      
-      <div className="mt-10 border-t border-white/10 pt-4 text-center
-       text-sm text-gray-300">
-        © {new Date().getFullYear()} Artify — Historical Artifacts Tracker.
-        All rights reserved.
+      <div
+        className="mt-10 border-t border-white/10 pt-4 text-center
+       text-sm text-gray-300"
+      >
+        © {new Date().getFullYear()} Artify — Historical Artifacts Tracker. All
+        rights reserved.
       </div>
     </footer>
   );

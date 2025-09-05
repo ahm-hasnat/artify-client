@@ -3,27 +3,25 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { FaHeart, FaMapMarkerAlt } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import Lottie from "lottie-react";
-import noDataAnimation from '../../assets/No-Data.json'; 
+import noDataAnimation from "../../assets/No-Data.json";
 
 const LikedArtifact = () => {
   const { user } = useContext(AuthContext);
   const [likedArtifacts, setLikedArtifacts] = useState([]);
 
   useEffect(() => {
-          const email = user?.email;
-          const accessToken = user?.accessToken;
-          fetch(`http://localhost:3000/likedartifacts?email=${email}`,{
-  
-              headers: {
-                  authorization: `Bearer ${accessToken}`
-              }
-          })
-              .then(res => res.json())
-              .then(data => {
-                  setLikedArtifacts(data);
-              })
-             
-      }, [user?.email]);
+    const email = user?.email;
+    const accessToken = user?.accessToken;
+    fetch(`http://localhost:3000/likedartifacts?email=${email}`, {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setLikedArtifacts(data);
+      });
+  }, [user?.email]);
   return (
     <div className="">
       <Helmet>
@@ -40,15 +38,16 @@ const LikedArtifact = () => {
               You haven't liked any artifacts yet.
             </p>
             <div className="w-full max-w-md">
-        <Lottie animationData={noDataAnimation} loop={true} />
-      </div>
+              <Lottie animationData={noDataAnimation} loop={true} />
+            </div>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {likedArtifacts.map((artifact) => (
               <div
                 key={artifact._id}
-                className="card bg-base-100 shadow-xl rounded-2xl overflow-hidden flex flex-col"
+                className="card bg-base-100 shadow-xl rounded-2xl 
+                overflow-hidden flex flex-col"
               >
                 <figure className="h-48 overflow-hidden">
                   <img
@@ -75,7 +74,6 @@ const LikedArtifact = () => {
                     {artifact.shortDescription}
                   </p>
 
-                 
                   <div className="flex flex-col gap-2 mt-auto text-sm">
                     <div className="flex items-center gap-2">
                       <FaHeart className="text-red-500" /> {artifact.likes || 0}{" "}

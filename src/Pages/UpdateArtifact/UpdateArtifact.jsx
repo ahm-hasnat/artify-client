@@ -1,18 +1,26 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { useLoaderData, useParams } from 'react-router';
-import Swal from 'sweetalert2';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
+import { useLoaderData, useParams } from "react-router";
+import Swal from "sweetalert2";
 
 const UpdateArtifact = () => {
-   
-    const artifactData = useLoaderData();
-   console.log(artifactData);
-    const { artifactName, artifactImage, artifactType, 
-                    historicalContext, createdAt, discoveredAt, 
-        discoveredBy, presentLocation, addedBy, email} = artifactData;
+  const artifactData = useLoaderData();
+  console.log(artifactData);
+  const {
+    artifactName,
+    artifactImage,
+    artifactType,
+    historicalContext,
+    createdAt,
+    discoveredAt,
+    discoveredBy,
+    presentLocation,
+    addedBy,
+    email,
+  } = artifactData;
 
-            const handleUpdate = (e) => {
+  const handleUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
     const name = addedBy;
@@ -22,9 +30,13 @@ const UpdateArtifact = () => {
 
     const updatedArtifact = { ...newData, name, email };
 
-    axios.put(`http://localhost:3000/allartifacts/${artifactData._id}`, updatedArtifact)
-      .then(res => {
-        console.log('Artifact updated:', res.data);
+    axios
+      .put(
+        `http://localhost:3000/allartifacts/${artifactData._id}`,
+        updatedArtifact
+      )
+      .then((res) => {
+        console.log("Artifact updated:", res.data);
         if (res.data.modifiedCount > 0) {
           Swal.fire({
             title: "Success!",
@@ -35,24 +47,20 @@ const UpdateArtifact = () => {
           });
         }
       })
-      .catch(error => {
-        console.error('Error updating artifact:', error);
+      .catch((error) => {
+        console.error("Error updating artifact:", error);
       });
-  }
+  };
 
-    return (
-        <div className=" max-w-5xl mx-auto my-16 px-6 pt-10">
-            <Helmet>
-              <title>Artify - Update Artifact</title>
-            </Helmet>
-             <h1 className="text-4xl font-bold mb-8 text-center">
-          Update Artifact
-        </h1>
+  return (
+    <div className=" max-w-5xl mx-auto my-16 px-6 pt-10">
+      <Helmet>
+        <title>Artify - Update Artifact</title>
+      </Helmet>
+      <h1 className="text-4xl font-bold mb-8 text-center">Update Artifact</h1>
       <div className="shadow-lg rounded-xl p-8 bg-white">
-       
-
         <form onSubmit={handleUpdate} className="space-y-6 ">
-          {/* Artifact Name */}
+       
           <div>
             <label className="block font-semibold mb-1">Artifact Name</label>
             <input
@@ -64,7 +72,7 @@ const UpdateArtifact = () => {
             />
           </div>
 
-          {/* Artifact Image */}
+         
           <div>
             <label className="block font-semibold mb-1">
               Artifact Image (URL)
@@ -78,7 +86,7 @@ const UpdateArtifact = () => {
             />
           </div>
 
-          {/* Artifact Type */}
+         
           <div>
             <label className="block font-semibold mb-1">Artifact Type</label>
             <select
@@ -97,7 +105,7 @@ const UpdateArtifact = () => {
             </select>
           </div>
 
-          {/* Historical Context */}
+         
           <div>
             <label className="block font-semibold mb-1">
               Historical Context
@@ -111,7 +119,7 @@ const UpdateArtifact = () => {
             />
           </div>
 
-          {/* Dates */}
+        
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block font-semibold mb-1">Created At</label>
@@ -137,7 +145,7 @@ const UpdateArtifact = () => {
             </div>
           </div>
 
-          {/* Discovered By */}
+         
           <div>
             <label className="block font-semibold mb-1">Discovered By</label>
             <input
@@ -149,7 +157,7 @@ const UpdateArtifact = () => {
             />
           </div>
 
-          {/* Present Location */}
+         
           <div>
             <label className="block font-semibold mb-1">Present Location</label>
             <input
@@ -161,7 +169,7 @@ const UpdateArtifact = () => {
             />
           </div>
 
-          {/* Adder Info */}
+       
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block font-semibold mb-1">Adder Name</label>
@@ -183,7 +191,7 @@ const UpdateArtifact = () => {
             </div>
           </div>
 
-          {/* Submit */}
+         
           <div className="flex justify-center">
             <button
               type="submit"
@@ -196,7 +204,7 @@ const UpdateArtifact = () => {
         </form>
       </div>
     </div>
-    );
+  );
 };
 
 export default UpdateArtifact;

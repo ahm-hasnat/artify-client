@@ -6,13 +6,11 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { Helmet } from "react-helmet-async";
 
-
 const Signin = () => {
   const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();
   const { user, signIn, signInWithGoggle } = use(AuthContext);
 
-  
   const handleSignIn = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -22,7 +20,7 @@ const Signin = () => {
     signIn(email, password)
       .then((result) => {
         const user = result.user;
-        // //.log(user);
+       
         Swal.fire({
           title: "Success!",
           text: "Signed in Successfully!.",
@@ -34,7 +32,7 @@ const Signin = () => {
       })
       .catch((error) => {
         const errorCode = error.code;
-        //.log(errorCode);
+      
 
         if (error.code === "auth/invalid-credential") {
           Swal.fire({
@@ -48,9 +46,9 @@ const Signin = () => {
   };
   return (
     <div className="hero mt-16">
-       <Helmet>
-              <title>Artify - Sign In</title>
-            </Helmet>
+      <Helmet>
+        <title>Artify - Sign In</title>
+      </Helmet>
       <div className="hero-content flex-col lg:flex">
         <div className="text-center lg:text-left">
           <h1 className="text-3xl font-bold mb-3 mt-4">Sign In now!</h1>
@@ -113,7 +111,6 @@ const Signin = () => {
                 </span>
               </p>
             </form>
-           
           </div>
         </div>
       </div>

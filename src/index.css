@@ -1,42 +1,39 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap");
 
 body {
-    font-family: 'Merriweather', serif;
+  font-family: "Merriweather", serif;
 }
 
-.btn1{
-    background-color: #B8860B;
-    color: white;
-    border: 0;
-    box-shadow: none;
-    font-size: medium;
-    font-weight: 600;
+.btn1 {
+  background-color: #b8860b;
+  color: white;
+  border: 0;
+  box-shadow: none;
+  font-size: medium;
+  font-weight: 600;
 }
 
-.btn2{
-    background-color: white;
-    color: #B8860B;
-    border: 0;
-    
+.btn2 {
+  color: #b8860b;
+  border: 0;
 }
-.btn1:hover{
-            background: #a4780a;
-            transform: translateY(-2px);
-        }
-.big{
-    color:#13130d ;
-    font-weight: bold;
+.btn1:hover {
+  background: #a4780a;
+  transform: translateY(-2px);
 }
-.small{
-    color:#6B7280 ;
-    font-size: 0.875rem;
-    font-weight: normal;
+.big {
+  color: #13130d;
+  font-weight: bold;
+}
+.small {
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: normal;
 }
 .swiper-button-next,
 .swiper-button-prev {
   color: #555722 !important; /* Dark blue */
 }
-

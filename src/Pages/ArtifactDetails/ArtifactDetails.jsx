@@ -35,9 +35,9 @@ const ArtifactDetails = () => {
   };
   return (
     <div className="py-12 px-4 mt-16 mb-10">
-        <Helmet>
-          <title>Artify - Artifact Details</title>
-        </Helmet>
+      <Helmet>
+        <title>Artify - Artifact Details</title>
+      </Helmet>
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold mb-4">Artifact Details</h1>
 
@@ -47,7 +47,8 @@ const ArtifactDetails = () => {
         </p>
       </div>
 
-      <div className="card w-full sm:w-3/4 lg:w-2/3 bg-base-100 shadow-xl border border-gray-200 rounded-2xl overflow-hidden mx-auto">
+      <div className="card w-full sm:w-3/4 lg:w-2/3 bg-base-100 
+      shadow-xl border border-gray-200 rounded-2xl overflow-hidden mx-auto">
         <figure>
           <img
             src={artifact.artifactImage}
@@ -62,12 +63,13 @@ const ArtifactDetails = () => {
           </h1>
 
           <div className="flex justify-center mb-8">
-            <span className="badge badge-outline px-4 py-3 text-lg flex items-center gap-2">
+            <span className="badge badge-outline px-4 py-3 text-lg flex 
+            items-center gap-2">
               <FaHeart className="text-red-500" /> {likes} Likes
             </span>
           </div>
 
-          {/* Artifact Description */}
+          
           <div className="space-y-4 text-gray-700 leading-relaxed text-lg">
             <p>
               <strong>Type:</strong> {artifact.artifactType}
@@ -92,7 +94,7 @@ const ArtifactDetails = () => {
             </p>
           </div>
 
-          {/* Like Button */}
+         
           <div className="flex justify-center mt-10">
             <button
               onClick={handleLike}

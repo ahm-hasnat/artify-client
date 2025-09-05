@@ -1,45 +1,42 @@
-import React, { use, useEffect, useState } from 'react';
-import { useLoaderData, useNavigate } from 'react-router';
-import { AuthContext } from '../../AuthProvider/AuthProvider';
-import { FaEdit,  FaTrashAlt } from 'react-icons/fa';
-import { m } from 'framer-motion';
-import axios from 'axios';
-import Swal from 'sweetalert2';
-import { Helmet } from 'react-helmet-async';
+import React, { use, useEffect, useState } from "react";
+import { useLoaderData, useNavigate } from "react-router";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { m } from "framer-motion";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 import Lottie from "lottie-react";
-import noDataAnimation from '../../assets/No-Data.json';
+import noDataAnimation from "../../assets/No-Data.json";
 
 const MyArtifacts = () => {
+  const { user } = use(AuthContext);
+  const [myArtifacts, setMyArtifacts] = useState([]);
 
-   const {user} = use(AuthContext);
-const [myArtifacts, setMyArtifacts] = useState([]);
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  useEffect(() => {
+    const email = user?.email;
+    const accessToken = user?.accessToken;
+    fetch(`http://localhost:3000/myartifacts?email=${email}`, {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setMyArtifacts(data);
+      });
+  }, [user?.email]);
 
-    useEffect(() => {
-        const email = user?.email;
-        const accessToken = user?.accessToken;
-        fetch(`http://localhost:3000/myartifacts?email=${email}`,{
+  const handleUpdate = (id) => {
+    navigate(`/update/${id}`);
+    console.log(id);
+  };
 
-            headers: {
-                authorization: `Bearer ${accessToken}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                setMyArtifacts(data);
-            })
-           
-    }, [user?.email]);
-
-    const handleUpdate = (id) => {
-        navigate(`/update/${id}`);
-        console.log(id);
-    };
-
-        const handleDelete = (id) => {
-            console.log(id);
-             Swal.fire({
+  const handleDelete = (id) => {
+    console.log(id);
+    Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
@@ -48,37 +45,36 @@ const [myArtifacts, setMyArtifacts] = useState([]);
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     })
-    .then((result) => {
-      if (result.isConfirmed) {
-       
-         axios.delete(`http://localhost:3000/allartifacts/${id}`)
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete(`http://localhost:3000/allartifacts/${id}`)
             .then((res) => {
-         
-            if (res.data.deletedCount) {
-                 setMyArtifacts(myArtifacts.filter(artifact => artifact._id !== id));
-                   Swal.fire({
-                       title: 'Deleted!',
-                       text: 'Your artifact has been deleted.',
-                       icon: 'success',
-                        showConfirmButton: false,
-                   timer: 1500,
-                   });
-                  
-               }
-            })
-            }
-            })
-            .catch(error => {
-              
-                console.error("Error deleting artifact:", error);
+              if (res.data.deletedCount) {
+                setMyArtifacts(
+                  myArtifacts.filter((artifact) => artifact._id !== id)
+                );
+                Swal.fire({
+                  title: "Deleted!",
+                  text: "Your artifact has been deleted.",
+                  icon: "success",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+              }
             });
-        };
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting artifact:", error);
+      });
+  };
 
-    return (
-          <div className="py-16 mt-10">
-            <Helmet>
-              <title>Artify - My Artifacts</title>
-            </Helmet>
+  return (
+    <div className="py-16 mt-10">
+      <Helmet>
+        <title>Artify - My Artifacts</title>
+      </Helmet>
       <div className="max-w-5xl mx-auto px-4">
         <h1 className="text-3xl font-bold text-center mb-10 big">
           My Artifacts
@@ -89,9 +85,9 @@ const [myArtifacts, setMyArtifacts] = useState([]);
             <p className="text-center text-gray-500 mb-4">
               You haven't added any artifacts yet.
             </p>
-             <div className="w-full max-w-md">
-        <Lottie animationData={noDataAnimation} loop={true} />
-      </div>
+            <div className="w-full max-w-md">
+              <Lottie animationData={noDataAnimation} loop={true} />
+            </div>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -123,7 +119,9 @@ const [myArtifacts, setMyArtifacts] = useState([]);
                         />
                       </div>
                     </td>
-                    <td className="p-3 font-semibold">{artifact.artifactName}</td>
+                    <td className="p-3 font-semibold">
+                      {artifact.artifactName}
+                    </td>
                     <td className="p-3">
                       <span className="badge badge-accent px-3 py-1">
                         {artifact.artifactType}
@@ -143,7 +141,7 @@ const [myArtifacts, setMyArtifacts] = useState([]);
                       </button>
                       <button
                         className="btn btn-sm btn-outline btn-error ml-2"
-                       onClick={() => handleDelete(artifact._id)}
+                        onClick={() => handleDelete(artifact._id)}
                       >
                         <FaTrashAlt />
                       </button>
@@ -155,9 +153,8 @@ const [myArtifacts, setMyArtifacts] = useState([]);
           </div>
         )}
       </div>
-      
     </div>
-    );
+  );
 };
 
 export default MyArtifacts;

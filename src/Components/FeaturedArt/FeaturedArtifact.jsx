@@ -39,17 +39,18 @@ const FeaturedArtifact = () => {
                 </h2>
                 <p className="text-gray-700">{item.shortDescription}</p>
               </div>
-<div className="flex items-center gap-2 text-gray-600">
-                  <FaHeart className="text-red-500" /> {item.likes}
-                </div>
+              <div className="flex items-center gap-2 text-gray-600">
+                <FaHeart className="text-red-500" /> {item.likes}
+              </div>
 
               <div className="">
-
-                  <button onClick={() => navigate(`/details/${item._id}`)} className="btn btn-md btn2 p-0 text-md
-                  flex items-center gap-2">
-                    View Details <FaArrowRight />
-                  </button>
-               
+                <button
+                  onClick={() => navigate(`/details/${item._id}`)}
+                  className="font-bold btn-md btn2 p-0 text-md
+                 hover:underline flex items-center gap-2"
+                >
+                  View Details <FaArrowRight />
+                </button>
               </div>
             </div>
           </div>
