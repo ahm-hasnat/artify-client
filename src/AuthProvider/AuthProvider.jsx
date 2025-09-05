@@ -46,6 +46,7 @@ const signIn = (email,password)=>{
         signIn,
         signout,
         updateUser,
+        loading,
     };
 
     return <AuthContext value={AuthData}>{children}</AuthContext>;

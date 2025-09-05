@@ -1,17 +1,29 @@
-import React, { useContext } from "react";
-import { useLoaderData } from "react-router";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { FaHeart, FaMapMarkerAlt } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
+import Lottie from "lottie-react";
+import noDataAnimation from '../../assets/No-Data.json'; 
 
 const LikedArtifact = () => {
   const { user } = useContext(AuthContext);
-  const artifactsData = useLoaderData();
+  const [likedArtifacts, setLikedArtifacts] = useState([]);
 
-  const likedArtifacts = artifactsData.filter((artifact) =>
-    artifact?.likedBy?.includes(user?.email)
-  );
-
+  useEffect(() => {
+          const email = user?.email;
+          const accessToken = user?.accessToken;
+          fetch(`http://localhost:3000/likedartifacts?email=${email}`,{
+  
+              headers: {
+                  authorization: `Bearer ${accessToken}`
+              }
+          })
+              .then(res => res.json())
+              .then(data => {
+                  setLikedArtifacts(data);
+              })
+             
+      }, [user?.email]);
   return (
     <div className="">
       <Helmet>
@@ -27,6 +39,9 @@ const LikedArtifact = () => {
             <p className="text-center text-gray-500">
               You haven't liked any artifacts yet.
             </p>
+            <div className="w-full max-w-md">
+        <Lottie animationData={noDataAnimation} loop={true} />
+      </div>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -48,14 +48,14 @@ import PrivateRoute from '../AuthProvider/PrivateRoute';
               element: <PrivateRoute>
                 <MyArtifacts />
               </PrivateRoute>,
-              loader: () => fetch('http://localhost:3000/allartifacts')
+             
              },
              {
               path: '/liked',
               element: <PrivateRoute>
                 <LikedArtifact />
               </PrivateRoute>,
-              loader: () => fetch('http://localhost:3000/allartifacts')
+             
              },{
               path: '/update/:id',
               element: <PrivateRoute>

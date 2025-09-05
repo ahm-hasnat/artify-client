@@ -6,18 +6,31 @@ import { m } from 'framer-motion';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Helmet } from 'react-helmet-async';
+import Lottie from "lottie-react";
+import noDataAnimation from '../../assets/No-Data.json';
 
 const MyArtifacts = () => {
-    const allArtifacts = useLoaderData();
-    const {user} = use(AuthContext);
+
+   const {user} = use(AuthContext);
+const [myArtifacts, setMyArtifacts] = useState([]);
+
     const navigate = useNavigate();
 
-    const [myArtifacts, setMyArtifacts] = useState([]);
-     useEffect(() => {
-        setMyArtifacts(allArtifacts.filter(artifact => 
-            artifact.addedBy === user?.displayName));
-    }, [allArtifacts, user]);
+    useEffect(() => {
+        const email = user?.email;
+        const accessToken = user?.accessToken;
+        fetch(`http://localhost:3000/myartifacts?email=${email}`,{
 
+            headers: {
+                authorization: `Bearer ${accessToken}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                setMyArtifacts(data);
+            })
+           
+    }, [user?.email]);
 
     const handleUpdate = (id) => {
         navigate(`/update/${id}`);
@@ -76,7 +89,9 @@ const MyArtifacts = () => {
             <p className="text-center text-gray-500 mb-4">
               You haven't added any artifacts yet.
             </p>
-           
+             <div className="w-full max-w-md">
+        <Lottie animationData={noDataAnimation} loop={true} />
+      </div>
           </div>
         ) : (
           <div className="overflow-x-auto">
