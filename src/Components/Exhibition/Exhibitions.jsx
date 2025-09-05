@@ -28,7 +28,7 @@ const Exhibitions = () => {
   };
 
   return (
-    <div className=" w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto">
       <h1 className="text-4xl font-bold text-center mb-6">
         Ongoing Exhibitions
       </h1>
@@ -42,8 +42,8 @@ const Exhibitions = () => {
         {exhibitions.map((exhibition, index) => (
           <motion.div
             key={exhibition._id}
-            className="flex items-center gap-3 bg-white rounded-2xl 
-              shadow-md hover:shadow-xl h-72
+            className="flex flex-col-reverse md:flex-row items-center gap-3 bg-white rounded-2xl 
+              shadow-md hover:shadow-xl lg:h-72
               transition-shadow duration-300 overflow-hidden"
             variants={cardVariants}
             initial="hidden"
@@ -52,8 +52,8 @@ const Exhibitions = () => {
             custom={index}
           >
             <div
-              className="flex flex-col gap-3 justify-center items-center bg-white
-             p-6 w-28 border-r"
+              className="flex lg:flex-col gap-3 justify-center items-center bg-white
+             p-6 max-w-28 md:border-r "
             >
               <p className="text-sm font-semibold text-gray-500 uppercase">
                 {new Date(exhibition.startDate).toLocaleString("default", {

@@ -12,7 +12,7 @@ const FeaturedArtifact = () => {
   }, []);
 
   return (
-    <div className="py-16   w-6xl mx-auto">
+    <div className="py-16   max-w-6xl mx-auto">
       <h1 className="text-4xl font-bold text-center mb-6 big">
         Featured Artifacts
       </h1>

@@ -30,7 +30,7 @@ const AllArtifacts = () => {
   };
 
   return (
-    <div className="py-12 mt-16 w-6xl mx-auto mb-6">
+    <div className="py-12 mt-16 max-w-6xl mx-auto mb-6">
       <Helmet>
         <title>Artify - All Artifacts</title>
       </Helmet>

@@ -134,13 +134,13 @@ const MyArtifacts = () => {
                     </td>
                     <td>
                       <button
-                        className="btn btn-sm btn-outline btn-info"
+                        className="btn btn-sm btn-outline ml-2 mb-2 btn-info"
                         onClick={() => handleUpdate(artifact._id)}
                       >
                         <FaEdit />
                       </button>
                       <button
-                        className="btn btn-sm btn-outline btn-error ml-2"
+                        className="btn btn-sm btn-outline btn-error ml-2 mb-2"
                         onClick={() => handleDelete(artifact._id)}
                       >
                         <FaTrashAlt />
