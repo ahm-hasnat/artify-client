@@ -16,6 +16,10 @@ const ArtifactDetails = () => {
   );
 
   const handleLike = () => {
+    if (!user) {
+      toast.error("You must be logged in to like an artifact");
+      return;
+    }
     axios
       .post(`https://artify-server-opdh.onrender.com/artifacts/${artifact._id}/like`, {
         email: user.email,
