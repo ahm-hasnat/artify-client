@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
 import { FaHeart, FaThumbsUp } from "react-icons/fa";
 import toast from "react-hot-toast";
@@ -8,51 +8,60 @@ import { Helmet } from "react-helmet-async";
 
 const ArtifactDetails = () => {
   const artifact = useLoaderData();
-  const { user } = use(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const [likes, setLikes] = useState(artifact.likes || 0);
-  const [liked, setLiked] = useState(
-    artifact.likedBy?.includes(user?.email) || false
-  );
+  const [liked, setLiked] = useState(false);
 
-  const handleLike = () => {
+  useEffect(() => {
+    if (user && artifact.likedBy) {
+      setLiked(artifact.likedBy.includes(user.email));
+    }
+  }, [user, artifact]);
+
+  const handleLike = async () => {
     if (!user) {
       toast.error("You must be logged in to like an artifact");
       return;
     }
-    axios
-      .post(`https://artify-server-opdh.onrender.com/artifacts/${artifact._id}/like`, {
-        email: user.email,
-      })
-      .then((res) => {
-        const updatedArtifact = res.data;
-        setLikes(updatedArtifact.likes);
-        setLiked(updatedArtifact.likedBy.includes(user.email));
 
-        if (updatedArtifact.likedBy.includes(user.email)) {
-          toast.success("You liked this artifact");
-        } else {
-          toast.error("You unliked this artifact");
-        }
-      })
-      .catch((err) => console.error(err));
+    try {
+      const res = await axios.post(
+        `https://artify-server-opdh.onrender.com/artifacts/${artifact._id}/like`,
+        { email: user.email }
+      );
+
+      const updatedArtifact = res.data;
+
+      setLikes(updatedArtifact.likes);
+      setLiked(updatedArtifact.likedBy.includes(user.email));
+
+      toast.success(
+        updatedArtifact.likedBy.includes(user.email)
+          ? "You liked this artifact"
+          : "You unliked this artifact"
+      );
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong while updating your like");
+    }
   };
+
   return (
     <div className="py-12 px-4 mt-16 mb-10">
       <Helmet>
         <title>Artify - Artifact Details</title>
       </Helmet>
+
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold mb-4">Artifact Details</h1>
-
         <p className="text-gray-600 max-w-2xl mx-auto">
           Explore this artifact in detail, learn about its historical context,
           discovery, and significance.
         </p>
       </div>
 
-      <div className="card w-full sm:w-3/4 lg:w-2/3 bg-base-100 
-      shadow-xl border border-gray-200 rounded-2xl overflow-hidden mx-auto">
+      <div className="card w-full sm:w-3/4 lg:w-2/3 bg-base-100 shadow-xl border border-gray-200 rounded-2xl overflow-hidden mx-auto">
         <figure>
           <img
             src={artifact.artifactImage}
@@ -67,13 +76,11 @@ const ArtifactDetails = () => {
           </h1>
 
           <div className="flex justify-center mb-8">
-            <span className="badge badge-outline px-4 py-3 text-lg flex 
-            items-center gap-2">
+            <span className="badge badge-outline px-4 py-3 text-lg flex items-center gap-2">
               <FaHeart className="text-red-500" /> {likes} Likes
             </span>
           </div>
 
-          
           <div className="space-y-4 text-gray-700 leading-relaxed text-lg">
             <p>
               <strong>Type:</strong> {artifact.artifactType}
@@ -98,7 +105,6 @@ const ArtifactDetails = () => {
             </p>
           </div>
 
-         
           <div className="flex justify-center mt-10">
             <button
               onClick={handleLike}

@@ -9,6 +9,7 @@ const LikedArtifact = () => {
   const { user } = useContext(AuthContext);
   const [likedArtifacts, setLikedArtifacts] = useState([]);
 
+
   useEffect(() => {
     const email = user?.email;
     const accessToken = user?.accessToken;
