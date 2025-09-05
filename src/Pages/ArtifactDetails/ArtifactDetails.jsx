@@ -7,31 +7,35 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { Helmet } from "react-helmet-async";
 
 const ArtifactDetails = () => {
-  const artifact = useLoaderData();
+  const artifact = useLoaderData(); // comes from loader in router
   const { user } = useContext(AuthContext);
 
   const [likes, setLikes] = useState(artifact.likes || 0);
   const [liked, setLiked] = useState(false);
 
+  // ✅ check if this user already liked
   useEffect(() => {
     if (artifact.likedBy?.includes(user?.email)) {
       setLiked(true);
+    } else {
+      setLiked(false);
     }
-  }, [artifact.likedBy, user?.email]);
+  }, [artifact, user?.email]);
 
   const handleLike = async () => {
     if (!user) {
-      toast.error("You need to be logged in to like.");
+      toast.error("You need to be signed in to like.");
       return;
     }
 
     try {
-      const response = await axios.post(`/artifacts/${artifact._id}/like`, {
-        email: user.email,
-      });
+      const response = await axios.post(
+        `http://localhost:3000/artifacts/${artifact._id}/like`,
+        { email: user.email }
+      );
 
       const updatedArtifact = response.data;
-      const isLikedNow = updatedArtifact.likedBy.includes(user.email);
+      const isLikedNow = updatedArtifact.likedBy?.includes(user.email);
 
       setLikes(updatedArtifact.likes);
       setLiked(isLikedNow);
@@ -42,7 +46,7 @@ const ArtifactDetails = () => {
         toast.error("You unliked this artifact.");
       }
     } catch (error) {
-      console.error("Like error:", error);
+      console.error(error);
       toast.error("Something went wrong");
     }
   };
@@ -94,7 +98,9 @@ const ArtifactDetails = () => {
           <div className="flex justify-center mt-10">
             <button
               onClick={handleLike}
-              className={`btn flex items-center gap-2 ${liked ? "btn-primary" : "btn-outline"}`}
+              className={`btn flex items-center gap-2 ${
+                liked ? "btn-primary" : "btn-outline"
+              }`}
             >
               <FaThumbsUp /> {liked ? "Liked" : "Like"}
             </button>
