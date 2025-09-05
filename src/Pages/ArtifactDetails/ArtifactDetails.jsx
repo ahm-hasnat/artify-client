@@ -1,72 +1,62 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useLoaderData, useParams } from "react-router";
+import React, { useContext, useEffect, useState } from "react";
+import { useLoaderData } from "react-router";
 import { FaHeart, FaThumbsUp } from "react-icons/fa";
-import { Helmet } from "react-helmet-async";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { Helmet } from "react-helmet-async";
 
 const ArtifactDetails = () => {
-  const { id } = useParams();
-  const initialArtifact = useLoaderData();
+  const artifact = useLoaderData();
   const { user } = useContext(AuthContext);
 
-  const [artifact, setArtifact] = useState(initialArtifact);
-  const [likes, setLikes] = useState(initialArtifact.likes || 0);
-  const [liked, setLiked] = useState(
-    initialArtifact.likedBy?.includes(user?.email) || false
-  );
+  const [likes, setLikes] = useState(artifact.likes || 0);
+  const [liked, setLiked] = useState(false);
+  const [loading, setLoading] = useState(false);
 
- 
-  const fetchArtifact = async () => {
-    try {
-      const res = await axios.get(
-        `https://artify-server-opdh.onrender.com/artifacts/${id}`
-      );
-      const freshArtifact = res.data;
-      setArtifact(freshArtifact);
-      setLikes(freshArtifact.likes || 0);
-      setLiked(freshArtifact.likedBy?.includes(user?.email) || false);
-    } catch (err) {
-      console.error("Error fetching artifact:", err);
+  useEffect(() => {
+    if (artifact.likedBy?.includes(user?.email)) {
+      setLiked(true);
     }
-  };
+  }, [artifact.likedBy, user?.email]);
 
   const handleLike = async () => {
     if (!user) {
-      toast.error("You must be signed in to like an artifact");
+      toast.error("You need to be signed in to like.");
       return;
     }
 
     try {
-      await axios.post(
-        `https://artify-server-opdh.onrender.com/artifacts/${artifact._id}/like`,
-        { email: user.email }
-      );
+      setLoading(true);
 
-      
-      await fetchArtifact();
+      const response = await axios.post(`/artifacts/${artifact._id}/like`, {
+        email: user.email,
+      });
 
-      if (!liked) {
-        toast.success("You liked this artifact");
+      const updatedArtifact = response.data;
+      const isLikedNow = updatedArtifact.likedBy.includes(user.email);
+
+      setLikes(updatedArtifact.likes);
+      setLiked(isLikedNow);
+
+      if (isLikedNow) {
+        toast.success("You liked this artifact!");
       } else {
-        toast.error("You unliked this artifact");
+        toast.error("You unliked this artifact.");
       }
-    } catch (err) {
-      console.error("Error liking artifact:", err);
+    } catch (error) {
+      toast.error("An error occurred while updating the like.");
+    } finally {
+      setLoading(false);
     }
   };
-
-  
-  useEffect(() => {
-    fetchArtifact();
-  }, [id]);
 
   return (
     <div className="py-12 px-4 mt-16 mb-10">
       <Helmet>
         <title>Artify - Artifact Details</title>
       </Helmet>
+
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold mb-4">Artifact Details</h1>
         <p className="text-gray-600 max-w-2xl mx-auto">
@@ -75,12 +65,14 @@ const ArtifactDetails = () => {
         </p>
       </div>
 
-      <div className="card w-full sm:w-3/4 lg:w-2/3 bg-base-100 
-      shadow-xl border border-gray-200 rounded-2xl overflow-hidden mx-auto">
+      <div
+        className="card w-full sm:w-3/4 lg:w-2/3 bg-base-100 shadow-xl 
+      border border-gray-200 rounded-2xl overflow-hidden mx-auto"
+      >
         <figure>
           <img
             src={artifact.artifactImage}
-            alt={artifact.artifactName}
+            alt={artifact.artifactName || "artifact"}
             className="w-full h-96 object-cover"
           />
         </figure>
@@ -91,8 +83,10 @@ const ArtifactDetails = () => {
           </h1>
 
           <div className="flex justify-center mb-8">
-            <span className="badge badge-outline px-4 py-3 text-lg flex 
-            items-center gap-2">
+            <span
+              className="badge badge-outline px-4 py-3 text-lg flex 
+            items-center gap-2"
+            >
               <FaHeart className="text-red-500" /> {likes} Likes
             </span>
           </div>
@@ -124,11 +118,21 @@ const ArtifactDetails = () => {
           <div className="flex justify-center mt-10">
             <button
               onClick={handleLike}
+              disabled={loading}
               className={`btn flex items-center gap-2 ${
                 liked ? "btn-primary" : "btn-outline"
               }`}
             >
-              <FaThumbsUp /> {liked ? "Liked" : "Like"}
+              {loading ? (
+                <>
+                  <span className="loading loading-spinner"></span>
+                  Processing...
+                </>
+              ) : (
+                <>
+                  <FaThumbsUp /> {liked ? "Liked" : "Like"}
+                </>
+              )}
             </button>
           </div>
         </div>
