@@ -12,7 +12,6 @@ const ArtifactDetails = () => {
 
   const [likes, setLikes] = useState(artifact.likes || 0);
   const [liked, setLiked] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (artifact.likedBy?.includes(user?.email)) {
@@ -22,13 +21,11 @@ const ArtifactDetails = () => {
 
   const handleLike = async () => {
     if (!user) {
-      toast.error("You need to be signed in to like.");
+      toast.error("You need to be logged in to like.");
       return;
     }
 
     try {
-      setLoading(true);
-
       const response = await axios.post(`/artifacts/${artifact._id}/like`, {
         email: user.email,
       });
@@ -45,9 +42,8 @@ const ArtifactDetails = () => {
         toast.error("You unliked this artifact.");
       }
     } catch (error) {
-      toast.error("An error occurred while updating the like.");
-    } finally {
-      setLoading(false);
+      console.error("Like error:", error);
+      toast.error("Something went wrong");
     }
   };
 
@@ -65,10 +61,7 @@ const ArtifactDetails = () => {
         </p>
       </div>
 
-      <div
-        className="card w-full sm:w-3/4 lg:w-2/3 bg-base-100 shadow-xl 
-      border border-gray-200 rounded-2xl overflow-hidden mx-auto"
-      >
+      <div className="card w-full sm:w-3/4 lg:w-2/3 bg-base-100 shadow-xl border border-gray-200 rounded-2xl overflow-hidden mx-auto">
         <figure>
           <img
             src={artifact.artifactImage}
@@ -83,56 +76,27 @@ const ArtifactDetails = () => {
           </h1>
 
           <div className="flex justify-center mb-8">
-            <span
-              className="badge badge-outline px-4 py-3 text-lg flex 
-            items-center gap-2"
-            >
+            <span className="badge badge-outline px-4 py-3 text-lg flex items-center gap-2">
               <FaHeart className="text-red-500" /> {likes} Likes
             </span>
           </div>
 
           <div className="space-y-4 text-gray-700 leading-relaxed text-lg">
-            <p>
-              <strong>Type:</strong> {artifact.artifactType}
-            </p>
-            <p>
-              <strong>Historical Context:</strong> {artifact.historicalContext}
-            </p>
-            <p>
-              <strong>Created At:</strong> {artifact.createdAt}
-            </p>
-            <p>
-              <strong>Discovered At:</strong> {artifact.discoveredAt}
-            </p>
-            <p>
-              <strong>Discovered By:</strong> {artifact.discoveredBy}
-            </p>
-            <p>
-              <strong>Present Location:</strong> {artifact.presentLocation}
-            </p>
-            <p>
-              <strong>Description:</strong> {artifact.shortDescription}
-            </p>
+            <p><strong>Type:</strong> {artifact.artifactType}</p>
+            <p><strong>Historical Context:</strong> {artifact.historicalContext}</p>
+            <p><strong>Created At:</strong> {artifact.createdAt}</p>
+            <p><strong>Discovered At:</strong> {artifact.discoveredAt}</p>
+            <p><strong>Discovered By:</strong> {artifact.discoveredBy}</p>
+            <p><strong>Present Location:</strong> {artifact.presentLocation}</p>
+            <p><strong>Description:</strong> {artifact.shortDescription}</p>
           </div>
 
           <div className="flex justify-center mt-10">
             <button
               onClick={handleLike}
-              disabled={loading}
-              className={`btn flex items-center gap-2 ${
-                liked ? "btn-primary" : "btn-outline"
-              }`}
+              className={`btn flex items-center gap-2 ${liked ? "btn-primary" : "btn-outline"}`}
             >
-              {loading ? (
-                <>
-                  <span className="loading loading-spinner"></span>
-                  Processing...
-                </>
-              ) : (
-                <>
-                  <FaThumbsUp /> {liked ? "Liked" : "Like"}
-                </>
-              )}
+              <FaThumbsUp /> {liked ? "Liked" : "Like"}
             </button>
           </div>
         </div>
