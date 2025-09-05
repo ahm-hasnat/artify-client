@@ -7,13 +7,13 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { Helmet } from "react-helmet-async";
 
 const ArtifactDetails = () => {
-  const artifact = useLoaderData(); // comes from loader in router
+  const artifact = useLoaderData(); 
   const { user } = useContext(AuthContext);
 
   const [likes, setLikes] = useState(artifact.likes || 0);
   const [liked, setLiked] = useState(false);
 
-  // ✅ check if this user already liked
+
   useEffect(() => {
     if (artifact.likedBy?.includes(user?.email)) {
       setLiked(true);
