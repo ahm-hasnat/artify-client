@@ -1,111 +1,72 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useLoaderData } from "react-router";
+import React, { useEffect, useState, useContext } from "react";
+import { useLoaderData, useParams } from "react-router";
 import { FaHeart, FaThumbsUp } from "react-icons/fa";
+import { Helmet } from "react-helmet-async";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
-import { Helmet } from "react-helmet-async";
-
-const API_BASE = "https://artify-server-opdh.onrender.com";
 
 const ArtifactDetails = () => {
-  const initialArtifact = useLoaderData() || {};
+  const { id } = useParams();
+  const initialArtifact = useLoaderData();
   const { user } = useContext(AuthContext);
 
   const [artifact, setArtifact] = useState(initialArtifact);
   const [likes, setLikes] = useState(initialArtifact.likes || 0);
-  const [liked, setLiked] = useState(false);
-  const userEmail = user?.email;
+  const [liked, setLiked] = useState(
+    initialArtifact.likedBy?.includes(user?.email) || false
+  );
 
-  
-  useEffect(() => {
-    setArtifact(initialArtifact);
-    setLikes(initialArtifact?.likes || 0);
-    setLiked(
-      Boolean(userEmail && initialArtifact?.likedBy?.includes(userEmail))
-    );
-  }, [initialArtifact, userEmail]);
-
-  
-  const buildHeaders = () => {
-    const headers = { "Content-Type": "application/json" };
-    if (user?.accessToken)
-      headers["authorization"] = `Bearer ${user.accessToken}`;
-    return headers;
-  };
-
-  
+ 
   const fetchArtifact = async () => {
     try {
-      if (!artifact?._id) return;
-      const res = await axios.get(`${API_BASE}/allartifacts/${artifact._id}`, {
-        headers: buildHeaders(),
-      });
-      const fresh = res.data || {};
-      setArtifact(fresh);
-      setLikes(fresh.likes || 0);
-      setLiked(Boolean(userEmail && fresh.likedBy?.includes(userEmail)));
-      return fresh;
+      const res = await axios.get(
+        `https://artify-server-opdh.onrender.com/artifacts/${id}`
+      );
+      const freshArtifact = res.data;
+      setArtifact(freshArtifact);
+      setLikes(freshArtifact.likes || 0);
+      setLiked(freshArtifact.likedBy?.includes(user?.email) || false);
     } catch (err) {
-      console.error("Error refetching artifact:", err);
-      return null;
+      console.error("Error fetching artifact:", err);
     }
   };
 
   const handleLike = async () => {
-    if (!userEmail) {
-      toast.error("You must be logged in to like an artifact");
-      return;
-    }
-    if (!artifact?._id) {
-      toast.error("Artifact id missing");
+    if (!user) {
+      toast.error("You must be signed in to like an artifact");
       return;
     }
 
     try {
-      const res = await axios.post(
-        `${API_BASE}/artifacts/${artifact._id}/like`,
-        { email: userEmail },
-        { headers: buildHeaders() }
+      await axios.post(
+        `https://artify-server-opdh.onrender.com/artifacts/${artifact._id}/like`,
+        { email: user.email }
       );
 
-      const updated = res.data;
-
-  
-      if (updated && Array.isArray(updated.likedBy)) {
-        setArtifact(updated);
-        setLikes(updated.likes || 0);
-        const nowLiked = updated.likedBy.includes(userEmail);
-        setLiked(nowLiked);
-        if (nowLiked) {
-          toast.success("You liked this artifact");
-        } else {
-          toast.error("You removed your like");
-        }
-        return;
-      }
-
       
-      const fresh = await fetchArtifact();
-      if (fresh) {
-        const nowLiked = Boolean(fresh.likedBy?.includes(userEmail));
-        if (nowLiked) toast.success("You liked this artifact");
-        else toast.error("You removed your like");
+      await fetchArtifact();
+
+      if (!liked) {
+        toast.success("You liked this artifact");
       } else {
-        toast.error("Like updated but failed to refresh artifact");
+        toast.error("You unliked this artifact");
       }
     } catch (err) {
-      console.error("Like error:", err);
-      toast.error("Something went wrong while updating your like");
+      console.error("Error liking artifact:", err);
     }
   };
+
+  
+  useEffect(() => {
+    fetchArtifact();
+  }, [id]);
 
   return (
     <div className="py-12 px-4 mt-16 mb-10">
       <Helmet>
         <title>Artify - Artifact Details</title>
       </Helmet>
-
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold mb-4">Artifact Details</h1>
         <p className="text-gray-600 max-w-2xl mx-auto">
@@ -114,12 +75,12 @@ const ArtifactDetails = () => {
         </p>
       </div>
 
-      <div className="card w-full sm:w-3/4 lg:w-2/3 bg-base-100 shadow-xl 
-      border border-gray-200 rounded-2xl overflow-hidden mx-auto">
+      <div className="card w-full sm:w-3/4 lg:w-2/3 bg-base-100 
+      shadow-xl border border-gray-200 rounded-2xl overflow-hidden mx-auto">
         <figure>
           <img
             src={artifact.artifactImage}
-            alt={artifact.artifactName || "artifact"}
+            alt={artifact.artifactName}
             className="w-full h-96 object-cover"
           />
         </figure>
@@ -141,8 +102,7 @@ const ArtifactDetails = () => {
               <strong>Type:</strong> {artifact.artifactType}
             </p>
             <p>
-              <strong>Historical Context:</strong>
-              {artifact.historicalContext}
+              <strong>Historical Context:</strong> {artifact.historicalContext}
             </p>
             <p>
               <strong>Created At:</strong> {artifact.createdAt}
@@ -154,8 +114,7 @@ const ArtifactDetails = () => {
               <strong>Discovered By:</strong> {artifact.discoveredBy}
             </p>
             <p>
-              <strong>Present Location:</strong>
-              {artifact.presentLocation}
+              <strong>Present Location:</strong> {artifact.presentLocation}
             </p>
             <p>
               <strong>Description:</strong> {artifact.shortDescription}
