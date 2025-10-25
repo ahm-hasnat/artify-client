@@ -4,6 +4,7 @@ import FeaturedArtifact from '../../Components/FeaturedArt/FeaturedArtifact';
 import Exhibitions from '../../Components/Exhibition/Exhibitions';
 import Visitors from '../../Components/Visitors/Visitors';
 import { Helmet } from 'react-helmet-async';
+import LatestAddition from '../../Components/LatestAddition/LatestAddition';
 
 const Home = () => {
     return (
@@ -14,6 +15,7 @@ const Home = () => {
             <Slider></Slider> 
              <FeaturedArtifact></FeaturedArtifact>
             <Exhibitions></Exhibitions>
+            <LatestAddition></LatestAddition>
             <Visitors></Visitors>
         </div>
     );

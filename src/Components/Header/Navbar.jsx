@@ -9,6 +9,8 @@ const Navbar = () => {
   const { user, signout } = use(AuthContext);
   const navigate = useNavigate();
 
+  const admin = import.meta.env.VITE_adminEmail;
+
   const handleSignOut = () => {
     signout().then(() => {
       Swal.fire({
@@ -23,7 +25,7 @@ const Navbar = () => {
     isActive ? "underline md:text-yellow-500" : "md:text-white";
 
   return (
-    <div className="navbar px-4 p-1 bg-[#666666] shadow-sm fixed top-0 z-10">
+    <div className="navbar px-19 p-1 bg-[#666666] shadow-sm fixed top-0 z-10">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -87,11 +89,38 @@ const Navbar = () => {
               All Artifacts
             </NavLink>
           </li>
-          <li>
-            <NavLink className={activeLink} to="/addartifact">
-              Add Artifacts
-            </NavLink>
-          </li>
+
+          {user && user.email !== admin && (
+            <>
+              <li>
+                <NavLink className={activeLink} to="/myartifacts">
+                  My Artifacts
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink to={"/liked"} className={activeLink}>
+                  Liked Artifacts
+                </NavLink>
+              </li>
+            </>
+          )}
+
+           {(!user || user.email !== admin) && (
+            <li>
+              <NavLink className={activeLink} to="/addartifact">
+                Add Artifacts
+              </NavLink>
+            </li>
+          )}
+          
+          {user?.email === admin && (
+            <li>
+              <NavLink className={activeLink} to="/dashboard">
+                Dashboard
+              </NavLink>
+            </li>
+          )}
         </ul>
       </div>
       <div className="navbar-end">
@@ -108,22 +137,15 @@ const Navbar = () => {
             <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-[#666666] text-white
-        rounded-box z-1 mt-15 w-40 p-2 shadow"
+        rounded z-1 mt-14 w-40 p-2 shadow -left-7 flex items-center"
             >
-              <h3 className="font-bold text-lg">
-                Username: {user?.displayName}
-              </h3>
-              <li>
-                <NavLink className={activeLink} to="/myartifacts">
-                  My Artifacts
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink to={"/liked"} className={activeLink}>
-                  Liked Artifacts
-                </NavLink>
-              </li>
+              <div className="w-16 rounded-full" tabIndex={0}>
+                <img className="rounded-full" src={user?.photoURL} />
+              </div>
+              <h3 className="font-bold text-lg">{user?.displayName}</h3>
+              <p className="font-light break-words max-w-[140px] text-center">
+                {user?.email}
+              </p>
               <li>
                 <NavLink className={activeLink} to="/settings"></NavLink>
               </li>

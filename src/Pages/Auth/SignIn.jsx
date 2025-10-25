@@ -55,11 +55,11 @@ const Signin = () => {
         </div>
         <div
           className="card  w-full h-full shrink-0 
-    shadow-2xl border border-gray-200 nob"
+    shadow border border-gray-200 nob"
         >
           <div className="card-body md:w-md ">
             <form onSubmit={handleSignIn} className="form w-full ">
-              <label className="label">Email</label>
+              <label className="label font-semibold">Email</label>
               <br />
               <input
                 type="email"
@@ -67,7 +67,7 @@ const Signin = () => {
                 className="input mb-1 mt-2 w-full kala"
                 placeholder="Email"
               />
-              <label className="label mt-3">Password</label>
+              <label className="label mt-3 font-semibold">Password</label>
               <div className="relative">
                 <input
                   type={showPass ? "text" : "password"}
@@ -90,7 +90,7 @@ const Signin = () => {
                 </button>
               </div>
               <div>
-                <Link to="/auth/forget" className="link link-hover text-xs">
+                <Link to="/auth/forget" className="link link-hover text-xs mt-2">
                   Forgot password?
                 </Link>
               </div>

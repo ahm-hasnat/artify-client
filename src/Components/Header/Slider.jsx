@@ -4,6 +4,8 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import { Link } from "react-router";
+import { motion } from "framer-motion";
 
 const slides = [
   {
@@ -60,9 +62,22 @@ const Slider = () => {
                 <h1 className="text-4xl md:text-5xl font-bold mb-6">
                   {slide.title}
                 </h1>
-                <p className="text-lg max-w-2xl text-[#ffffffc9]">
+                <p className="text-lg max-w-2xl text-[#ffffffc9] mb-6">
                   {slide.description}
                 </p>
+
+                 <motion.div
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+                >
+                  <Link
+                    to={"/allartifacts"}
+                    className="btn btn-md btn1 text-white font-semibold px-6 py-3 rounded shadow border-none transition-all duration-300"
+                  >
+                    Get Started
+                  </Link>
+                </motion.div>
               </div>
             </div>
           </SwiperSlide>

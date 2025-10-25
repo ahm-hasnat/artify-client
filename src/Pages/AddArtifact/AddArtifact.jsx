@@ -48,8 +48,8 @@ const AddArtifact = () => {
       </div>
 
       <div
-        className="card w-full lg:w-2/3 mx-auto shadow-xl 
-      bg-base-100 border border-gray-200 rounded-2xl"
+        className="card w-full lg:w-2/3 mx-auto shadow 
+      bg-base-100 border border-gray-200 rounded"
       >
         <div className="card-body">
           <form onSubmit={handleAddArtifact} className="space-y-6">
@@ -184,8 +184,7 @@ const AddArtifact = () => {
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="btn btn-primary px-8 bg-[#204e51]
-               border-none hover:bg-[#183b3d]"
+                className="btn btn1"
               >
                 Add Artifact
               </button>

@@ -13,6 +13,8 @@ import MyArtifacts from "../Pages/MyArtifacts/MyArtifacts";
 import LikedArtifact from "../Pages/LikedArtifact/LikedArtrfact";
 import UpdateArtifact from "../Pages/UpdateArtifact/UpdateArtifact";
 import PrivateRoute from "../AuthProvider/PrivateRoute";
+import AdminRoute from "../AuthProvider/AdminRoute";
+import DashLayout from "../Pages/DashLayout/DashLayout";
 
 export const Router = createBrowserRouter([
   {
@@ -85,4 +87,12 @@ export const Router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/dashboard",
+    element: (
+      <AdminRoute>
+        <DashLayout />
+      </AdminRoute>
+    ),
+  }
 ]);

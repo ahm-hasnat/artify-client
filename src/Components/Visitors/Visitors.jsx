@@ -33,7 +33,7 @@ const feedbackData = [
 
 const Visitors = () => {
   return (
-    <div className="py-12 mb-8 text-center">
+    <div className="mb-16 text-center">
       <h1 className="text-4xl font-bold mb-12 big">Visitors Feedback</h1>
 
       <Swiper

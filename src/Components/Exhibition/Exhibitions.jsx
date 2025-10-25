@@ -29,10 +29,10 @@ const Exhibitions = () => {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <h1 className="text-4xl font-bold text-center mb-6">
+      <h1 className="text-4xl font-bold text-center mb-3">
         Ongoing Exhibitions
       </h1>
-      <p className="text-center text-gray-600 max-w-2xl mx-auto mb-6">
+      <p className="text-center text-gray-600 max-w-2xl mx-auto mb-8">
         Explore our ongoing exhibitions showcasing remarkable artifacts and
         cultural treasures from around the world. Don’t miss these unique
         displays!
@@ -42,8 +42,9 @@ const Exhibitions = () => {
         {exhibitions.map((exhibition, index) => (
           <motion.div
             key={exhibition._id}
-            className="flex flex-col-reverse md:flex-row items-center gap-3 bg-white rounded-2xl 
-              shadow-md hover:shadow-xl lg:h-72
+            className="flex flex-col-reverse md:flex-row items-center gap-3
+             bg-white rounded
+              shadow hover:shadow-xl lg:h-72
               transition-shadow duration-300 overflow-hidden"
             variants={cardVariants}
             initial="hidden"

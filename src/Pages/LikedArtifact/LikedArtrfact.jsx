@@ -47,7 +47,7 @@ const LikedArtifact = () => {
             {likedArtifacts.map((artifact) => (
               <div
                 key={artifact._id}
-                className="card bg-base-100 shadow-xl rounded-2xl 
+                className="card bg-base-100 shadow rounded 
                 overflow-hidden flex flex-col"
               >
                 <figure className="h-48 overflow-hidden">
